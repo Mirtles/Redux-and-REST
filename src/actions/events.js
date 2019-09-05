@@ -2,6 +2,7 @@ import request from 'superagent'
 
 export const EVENTS_FETCHED = "EVENTS_FETCHED"
 export const EVENT_CREATE_SUCCESS = 'EVENT_CREATE_SUCCESS'
+export const EVENT_FETCHED = 'EVENT_FETCHED'
 
 const baseUrl = 'http://localhost:4000'
 
@@ -16,7 +17,7 @@ export const loadEvents = () => (dispatch, getState) => {
   // else:
   request(`${baseUrl}/event`)
     .then(response => {
-      console.log("this is server response.body array:", response.body)
+      console.log("This is an array of all events:", response.body)
       dispatch(eventsFetched(response.body))
     })
     .catch(console.error)
@@ -37,4 +38,18 @@ export const createEvent = (eventData) => dispatch => {
     })
     .catch(console.error)
 
+}
+
+const eventFetched = event => ({
+  type: EVENT_FETCHED,
+  payload: event
+})
+
+export const loadEvent = (id) => dispatch => {
+  request(`${baseUrl}/event/${id}`)
+    .then(response => {
+      console.log("This is the requested event:", response.body)
+      dispatch(eventFetched(response.body))
+    })
+    .catch(console.error)
 }

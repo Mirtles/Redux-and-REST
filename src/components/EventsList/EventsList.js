@@ -8,7 +8,7 @@ export default class EventsList extends React.Component {
         {this.props.events
           .map((event, id) =>
             <li key={id}>
-              <Link to={`:3000/event/${id}`}>
+              <Link to={`/event/${id}`}>
                 {event.name}
               </Link>
             </li>
